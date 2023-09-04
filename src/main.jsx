@@ -10,5 +10,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ColorModeSwitcher />
       <App />
     </ChakraProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
