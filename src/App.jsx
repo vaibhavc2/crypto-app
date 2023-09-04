@@ -7,7 +7,6 @@ import Exchanges from "./components/Exchanges"
 import CoinDetails from "./components/CoinDetails"
 
 function App() {
-
   return (
     <Router>
       <Header />

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react"
 
 const Coins = () => {
-  return (
-    <div>Coins</div>
-  )
+  return <div>Coins</div>
 }
 
 export default Coins
