@@ -25,6 +25,7 @@ import { useParams } from "react-router-dom";
 import ErrorComponent from "./ErrorComponent";
 import Chart from "./Chart";
 import numberToCurrency from "../func/numberToCurrency";
+import ChartLoader from "./ChartLoader";
 
 const CoinDetails = () => {
   const [coin, setCoin] = useState({});
@@ -34,6 +35,7 @@ const CoinDetails = () => {
   const [currency, setCurrency] = useState("inr");
   const [days, setDays] = useState("24h");
   const [chartArray, setChartArray] = useState([]);
+  const [chartLoading, setChartLoading] = useState(true);
 
   const params = useParams();
 
@@ -43,47 +45,47 @@ const CoinDetails = () => {
     switch (val) {
       case "24h":
         setDays("24h");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       case "7d":
         setDays("7d");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       case "14d":
         setDays("14d");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       case "30d":
         setDays("30d");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       case "60d":
         setDays("60d");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       case "200d":
         setDays("200d");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       case "1y":
         setDays("365d");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       case "max":
         setDays("max");
-        setLoading(true);
+        setChartLoading(true);
         break;
 
       default:
         setDays("24h");
-        setLoading(true);
+        setChartLoading(true);
         break;
     }
   };
@@ -95,11 +97,9 @@ const CoinDetails = () => {
     const fetchCoinDetails = async () => {
       try {
         const { data } = await axios.get(`${server}/coins/${params.id}`);
-        const { data: chartData } = await axios.get(
-          `${server}/coins/${params.id}/market_chart?vs_currency=${currency}&days=${days}`
-        );
+
         setCoin(data);
-        setChartArray(chartData.prices);
+
         window.scrollTo(0, 0); // scroll to top
         setLoading(false);
       } catch (err) {
@@ -109,9 +109,24 @@ const CoinDetails = () => {
       }
     };
     fetchCoinDetails();
-  }, [params.id, currency, days]);
+  }, [params.id, currency]);
 
-  // useEffect((), [params.id, currency])
+  useEffect(() => {
+    const fetchChartDetails = async () => {
+      try {
+        const { data: chartData } = await axios.get(
+          `${server}/coins/${params.id}/market_chart?vs_currency=${currency}&days=${days}`
+        );
+        setChartArray(chartData.prices);
+        setChartLoading(false);
+      } catch (err) {
+        setError(true);
+        setChartLoading(false);
+        setErrorMessage(err.message);
+      }
+    };
+    fetchChartDetails();
+  }, [days]);
 
   if (error) return <ErrorComponent msg={errorMessage} />;
 
@@ -125,7 +140,13 @@ const CoinDetails = () => {
             <Heading display={"block"} textAlign={"center"} p={2}>
               {coin.name}
             </Heading>
-            <Chart arr={chartArray} currency={currencySymbol} days={days} />
+            {chartLoading ? (
+              <ChartLoader />
+            ) : (
+              <>
+                <Chart arr={chartArray} currency={currencySymbol} days={days} />
+              </>
+            )}
           </Box>
 
           <RadioGroup value={currency} onChange={setCurrency} m={5}>
