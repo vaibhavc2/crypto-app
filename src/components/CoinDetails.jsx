@@ -100,6 +100,7 @@ const CoinDetails = () => {
         );
         setCoin(data);
         setChartArray(chartData.prices);
+        window.scrollTo(0, 0); // scroll to top
         setLoading(false);
       } catch (err) {
         setError(true);
