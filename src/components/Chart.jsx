@@ -32,7 +32,6 @@ const Chart = ({ arr = [], currency, days }) => {
     prices.push(arr[i][1]);
   }
 
-  const data = {};
   return (
     <Line
       options={{ responsive: true }}
@@ -42,8 +41,15 @@ const Chart = ({ arr = [], currency, days }) => {
           {
             label: `Price in ${currency}`,
             data: prices,
-            borderColor: "rgb(255,99,132)",
-            backgroundColor: "rgb(255,99,13,0.5)"
+            borderColor:
+              prices[0] - prices[prices.length - 1] < 0
+                ? "rgb(10, 103, 0)"
+                : "rgb(200,0,0)",
+            backgroundColor: "rgb(255,99,132,0.2)"
+            // backgroundColor:
+            //   prices[0] - prices[prices.length - 1] < 0
+            //     ? "rgb(10, 103, 0, 0.2)"
+            //     : "rgb(220,0,0, 0.2)"
           }
         ]
       }}

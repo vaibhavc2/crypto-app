@@ -24,7 +24,6 @@ import { server } from "../main";
 import { useParams } from "react-router-dom";
 import ErrorComponent from "./ErrorComponent";
 import Chart from "./Chart";
-import { AnimateSharedLayout } from "framer-motion";
 import numberToCurrency from "../func/numberToCurrency";
 
 const CoinDetails = () => {
@@ -110,6 +109,8 @@ const CoinDetails = () => {
     };
     fetchCoinDetails();
   }, [params.id, currency, days]);
+
+  // useEffect((), [params.id, currency])
 
   if (error) return <ErrorComponent msg={errorMessage} />;
 

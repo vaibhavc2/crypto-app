@@ -1,16 +1,17 @@
 const numberToCurrency = (currency, number) => {
+  if (number === null) return null;
   let cur = "";
   switch (currency) {
     case "inr":
       cur = "en-IN";
       break;
 
-    case "usd":
-      cur = "en-US";
+    case "eur":
+      cur = "en-DE";
       break;
 
     default:
-      cur = "en-DE";
+      cur = "en-US";
       break;
   }
   let answer = number.toLocaleString(cur, {
