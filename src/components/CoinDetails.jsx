@@ -24,6 +24,8 @@ import { server } from "../main";
 import { useParams } from "react-router-dom";
 import ErrorComponent from "./ErrorComponent";
 import Chart from "./Chart";
+import { AnimateSharedLayout } from "framer-motion";
+import numberToCurrency from "../func/numberToCurrency";
 
 const CoinDetails = () => {
   const [coin, setCoin] = useState({});
@@ -150,7 +152,11 @@ const CoinDetails = () => {
             <Stat>
               <StatLabel>{coin.name}</StatLabel>
               <StatNumber>
-                {currencySymbol} {coin.market_data.current_price[currency]}
+                {currencySymbol}{" "}
+                {numberToCurrency(
+                  currency,
+                  coin.market_data.current_price[currency]
+                )}
               </StatNumber>
               <StatHelpText>
                 <StatArrow
@@ -174,27 +180,48 @@ const CoinDetails = () => {
             </Badge>
 
             <CustomBar
-              high={`${currencySymbol} ${coin.market_data.high_24h[currency]}`}
-              low={`${currencySymbol} ${coin.market_data.low_24h[currency]}`}
+              high={`${currencySymbol} ${numberToCurrency(
+                currency,
+                coin.market_data.high_24h[currency]
+              )}`}
+              low={`${currencySymbol} ${numberToCurrency(
+                currency,
+                coin.market_data.low_24h[currency]
+              )}`}
             />
 
             <Box w={"full"} p={4}>
-              <Item title="Max Supply" value={coin.market_data.max_supply} />
+              <Item
+                title="Max Supply"
+                value={numberToCurrency(currency, coin.market_data.max_supply)}
+              />
               <Item
                 title="Circulating Supply"
-                value={coin.market_data.circulating_supply}
+                value={numberToCurrency(
+                  currency,
+                  coin.market_data.circulating_supply
+                )}
               />
               <Item
                 title="Market Cap"
-                value={`${currencySymbol} ${coin.market_data.market_cap[currency]}`}
+                value={`${currencySymbol} ${numberToCurrency(
+                  currency,
+                  coin.market_data.market_cap[currency]
+                )}`}
               />
               <Item
                 title="All Time Low"
-                value={`${currencySymbol} ${coin.market_data.atl[currency]}`}
+                value={`${currencySymbol} ${numberToCurrency(
+                  currency,
+                  coin.market_data.atl[currency]
+                )}`}
               />
               <Item
                 title="All Time High"
-                value={`${currencySymbol} ${coin.market_data.ath[currency]}`}
+                value={`${currencySymbol} ${numberToCurrency(
+                  currency,
+                  coin.market_data.ath[currency]
+                )}`}
               />
             </Box>
           </VStack>

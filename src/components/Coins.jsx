@@ -67,6 +67,7 @@ const Coins = () => {
                 img={i.image}
                 symbol={i.symbol}
                 currencySymbol={currencySymbol}
+                currency={currency}
               />
             ))}
           </HStack>

@@ -1,8 +1,17 @@
 import { Heading, Image, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import numberToCurrency from "../func/numberToCurrency";
 
-const CoinCard = ({ id, name, img, symbol, price, currencySymbol = "₹" }) => {
+const CoinCard = ({
+  id,
+  name,
+  img,
+  symbol,
+  price,
+  currencySymbol = "₹",
+  currency
+}) => {
   return (
     <Link to={`/coins/${id}`}>
       <VStack
@@ -23,7 +32,11 @@ const CoinCard = ({ id, name, img, symbol, price, currencySymbol = "₹" }) => {
           {symbol}
         </Heading>
         <Text noOfLines={1}>{name}</Text>
-        <Text noOfLines={1}>{price ? `${currencySymbol}${price}` : "NA"}</Text>
+        <Text noOfLines={1}>
+          {price
+            ? `${currencySymbol}${numberToCurrency(currency, price)}`
+            : "NA"}
+        </Text>
       </VStack>
     </Link>
   );
