@@ -1,0 +1,8 @@
+{
+  "appId": "com.crypto.app.vc",
+  "appName": "Crypto",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
